@@ -3,7 +3,7 @@
 Nama   : Clarista <br/>
 NPM    : 2206815541
 
-1. Perbedaan utama antara stateless dan stateful widget dalam konteks pengembangan aplikasi Flutter
+1. Perbedaan utama antara stateless dan stateful widget dalam konteks pengembangan aplikasi Flutter<br/>
 `Stateless Widget:`<br/>
 Stateless widget adalah widget yang tidak memiliki perubahan internal (state) selama aplikasi masih berjalan. Stateless widget cocok digunakan untuk elemen UI yang tidak perlu diperbarui atau tidak berubah selama aplikasi berjalan. Stateless widget tidak memiliki metode `setState()`, sehingga tidak dapat memperbarui tampilan secara dinamis. Contoh penggunaan stateless widget dalam kode yang Anda berikan adalah widget `ShopCard`.
 
