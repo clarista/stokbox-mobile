@@ -82,9 +82,9 @@ class ShopCard extends StatelessWidget {
 
   Color getButtonColor() {
     if (item.name == "Lihat Produk") {
-      return Colors.blue; 
-    } else if (item.name == "Tambah Produk") {
       return Colors.green; 
+    } else if (item.name == "Tambah Produk") {
+      return Colors.blue; 
     } else if (item.name == "Logout") {
       return Colors.red; 
     } else {
