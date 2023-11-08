@@ -5,7 +5,7 @@ NPM    : 2206815541
 
 1. Perbedaan utama antara stateless dan stateful widget dalam konteks pengembangan aplikasi Flutter<br/>
 `Stateless Widget:`<br/>
-Stateless widget adalah widget yang tidak memiliki perubahan internal (state) selama aplikasi masih berjalan. Stateless widget cocok digunakan untuk elemen UI yang tidak perlu diperbarui atau tidak berubah selama aplikasi berjalan. Stateless widget tidak memiliki metode `setState()`, sehingga tidak dapat memperbarui tampilan secara dinamis. Contoh penggunaan stateless widget dalam kode yang Anda berikan adalah widget `ShopCard`.
+Stateless widget adalah widget yang tidak memiliki perubahan internal (state) selama aplikasi masih berjalan. Stateless widget cocok digunakan untuk elemen UI yang tidak perlu diperbarui atau tidak berubah selama aplikasi berjalan. Stateless widget tidak memiliki metode `setState()`, sehingga tidak dapat memperbarui tampilan secara dinamis. Contoh penggunaan stateless widget dalam kode yang Anda berikan adalah widget `ShopCard`. <br/>
 
 `Stateful Widget:`<br/>
 Stateful widget adalah widget yang memiliki perubahan internal (state) yang dapat diperbarui selama aplikasi berjalan. Ini digunakan untuk elemen UI yang memerlukan pembaruan tampilan berdasarkan perubahan data atau interaksi pengguna. Stateful widget memiliki metode `setState()`, yang memungkinkan Anda memperbarui tampilan ketika ada perubahan state. Contoh penggunaan stateful widget dalam Flutter biasanya melibatkan widget seperti `ListView`, `TextField`, dan lainnya yang perlu bereaksi terhadap input atau perubahan data.
@@ -23,19 +23,19 @@ Kelas ini digunakan untuk mewakili barang-barang yang dapat ditampilkan dalam da
 
 3. Implementasi Checklist Step-by-Step:
 
-1. Mengganti tema warna aplikasi menjadi berbagai warna:
+- Mengganti tema warna aplikasi menjadi berbagai warna:
    - Mengubah `colorScheme` dalam MaterialApp untuk menggunakan warna dari getButtonColor.
 
-2. Mengubah sifat widget halaman menu menjadi stateless:
+- Mengubah sifat widget halaman menu menjadi stateless:
    - Mengganti `MyHomePage` dari `StatefulWidget` menjadi `StatelessWidget`.
 
-3. Menambahkan daftar barang-barang yang simpan dalam `MyHomePage`:
+- Menambahkan daftar barang-barang yang simpan dalam `MyHomePage`:
    - Membuat list `ShopItem` yang mewakili tombol-tombol yang akan ditampilkan.
 
-4. Menampilkan daftar tombol menggunakan `GridView`:
+- Menampilkan daftar tombol menggunakan `GridView`:
    - Menggunakan `GridView.count` untuk menampilkan daftar `ShopCard` berdasarkan `ShopItem`.
 
-5. Membuat `ShopCard` sebagai widget stateless:
+- Membuat `ShopCard` sebagai widget stateless:
    - Membuat widget `ShopCard` yang menerima `ShopItem` sebagai argumen konstruktor.
    - Menggunakan `Material` dan `InkWell` untuk membuat kartu responsif terhadap sentuhan (onTap).
    - Menampilkan ikon dan teks berdasarkan `ShopItem` yang diberikan.
