@@ -39,5 +39,6 @@ Kelas ini digunakan untuk mewakili barang-barang yang dapat ditampilkan dalam da
    - Membuat widget `ShopCard` yang menerima `ShopItem` sebagai argumen konstruktor.
    - Menggunakan `Material` dan `InkWell` untuk membuat kartu responsif terhadap sentuhan (onTap).
    - Menampilkan ikon dan teks berdasarkan `ShopItem` yang diberikan.
-   - Menampilkan SnackBar ketika card diklik.
+   - Menampilkan SnackBar ketika card diklik. <br/>
+   Saat tombol di dalam aplikasi Flutter yang telah saya buat ditekan, saya mengimplementasikan action untuk menampilkan Snackbar dengan pesan yang sesuai dengan tombol yang ditekan. Misalnya, ketika saya menekan tombol "Lihat Produk", maka akan muncul Snackbar dengan pesan "Kamu telah menekan tombol Lihat Produk!". Saat saya menekan tombol "Tambah Produk", Snackbar akan muncul dengan pesan "Kamu telah menekan tombol Tambah Produk!", dan ketika saya menekan tombol "Logout", Snackbar akan muncul dengan pesan "Kamu telah menekan tombol Logout!". Implementasi ini memungkinkan pesan yang ditampilkan dalam Snackbar untuk dinamis sesuai dengan action yang dilakukan oleh user, sehingga memberikan feedback yang jelas tentang action yang telah dilakukan dalam aplikasi.
 

@@ -8,8 +8,8 @@ class ShopItem {
 class MyHomePage extends StatelessWidget {
     MyHomePage({Key? key}) : super(key: key);
     final List<ShopItem> items = [
-    ShopItem("Lihat Produk", Icons.checklist),
-    ShopItem("Tambah Produk", Icons.add_shopping_cart),
+    ShopItem("Lihat Item", Icons.checklist),
+    ShopItem("Tambah Item", Icons.add_shopping_cart),
     ShopItem("Logout", Icons.logout),
 ];
     @override
@@ -81,9 +81,9 @@ class ShopCard extends StatelessWidget {
   const ShopCard(this.item, {super.key}); // Constructor
 
   Color getButtonColor() {
-    if (item.name == "Lihat Produk") {
+    if (item.name == "Lihat Item") {
       return Colors.green; 
-    } else if (item.name == "Tambah Produk") {
+    } else if (item.name == "Tambah Item") {
       return Colors.blue; 
     } else if (item.name == "Logout") {
       return Colors.red; 
