@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stokbox/menu.dart';
+import 'package:stokbox/screens/menu.dart';
 
 void main() {
   runApp(const MyApp());
