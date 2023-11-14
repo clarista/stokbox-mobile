@@ -1,49 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:stokbox/screens/menu.dart';
-import 'package:stokbox/screens/shoplist_form.dart';
+import 'package:stokbox/screens/stokbox_form.dart';
+import 'package:stokbox/screens/stokbox_item.dart';
+
+class ShopItem {
+  final String name;
+  final IconData icon;
+
+  ShopItem(this.name, this.icon);
+}
 
 class ShopCard extends StatelessWidget {
   final ShopItem item;
+  final Color color;
 
-  const ShopCard(this.item, {super.key}); // Constructor
+  const ShopCard(this.item, this.color, {Key? key}) : super(key: key);
+  // const ShopCard(this.item, {super.key}); // Constructor
 
   @override
   Widget build(BuildContext context) {
-    Color buttonColor;
-    
-    // Tentukan warna untuk masing-masing tombol berdasarkan nama tombol
-    if (item.name == "Lihat Item") {
-      buttonColor = Colors.teal; // Warna latar belakang hijau
-    } else if (item.name == "Tambah Item") {
-      buttonColor = Colors.teal; // Warna latar belakang biru
-    } else if (item.name == "Logout") {
-      buttonColor = Colors.red.shade300; // Warna latar belakang merah
-    } else {
-      buttonColor = Colors.indigo; // Warna latar belakang default
-    }
-
     return Material(
-      //color: Colors.indigo,
-      elevation: 5,
-      color: buttonColor, // Gunakan warna yang telah ditentukan
+      color: color,
       child: InkWell(
-        // Area responsive terhadap sentuhan
+        // Area responsif terhadap sentuhan
         onTap: () {
           // Memunculkan SnackBar ketika diklik
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(
                 content: Text("Kamu telah menekan tombol ${item.name}!")));
+
           // Navigate ke route yang sesuai (tergantung jenis tombol)
           if (item.name == "Tambah Item") {
-            // Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup ShopFormPage.
+            // TODO: Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup ShopFormPage.
             Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ShopFormPage(),
-                  ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ShopFormPage(),
+                ));
+          }
+
+          if (item.name == "Lihat Item") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductListPage(productList: productList)
+              ));
           }
         },
+        
         child: Container(
           // Container untuk menyimpan Icon dan Text
           padding: const EdgeInsets.all(8),

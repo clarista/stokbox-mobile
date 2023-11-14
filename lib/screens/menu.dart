@@ -3,29 +3,23 @@ import 'package:flutter/material.dart';
 // Impor drawer widget
 import 'package:stokbox/widgets/left_drawer.dart';
 // Impor shop_card
-import 'package:stokbox/widgets/shop_card.dart';
+import 'package:stokbox/widgets/stokbox_card.dart';
 
-class ShopItem {
-  final String name;
-  final IconData icon;
-
-  ShopItem(this.name, this.icon);
-}
 class MyHomePage extends StatelessWidget {
-    MyHomePage({Key? key}) : super(key: key);
-    final List<ShopItem> items = [
+  MyHomePage({Key? key}) : super(key: key);
+
+  final List<ShopItem> items = [
     ShopItem("Lihat Item", Icons.checklist),
     ShopItem("Tambah Item", Icons.add_shopping_cart),
     ShopItem("Logout", Icons.logout),
-];
-    @override
-    Widget build(BuildContext context) {
-       return Scaffold(
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Stokbox',
-        ),
-        backgroundColor: Colors.red[300],
+        title: const Text('Stokbox'),
+        backgroundColor: Colors.indigo[300],
         foregroundColor: Colors.white,
       ),
       drawer: const LeftDrawer(),
@@ -57,15 +51,26 @@ class MyHomePage extends StatelessWidget {
                 mainAxisSpacing: 10,
                 crossAxisCount: 3,
                 shrinkWrap: true,
-                children: items.map((ShopItem item) {
-                  // Iterasi untuk setiap item
-                  return ShopCard(item);
+                children: items.asMap().entries.map((entry) {
+                // Iterasi untuk setiap item
+                int index = entry.key;
+                ShopItem item = entry.value;
+                Color color = Colors.white;
+                if (index == 0) {
+                  color = Colors.indigo.shade400;
+                } else if (index == 1) {
+                  color = Colors.indigo.shade400;
+                } else if (index == 2) {
+                  color = Colors.red.shade200;
+                }
+                return ShopCard(item, color);
                 }).toList(),
-              ),
+                ),
+
             ],
           ),
         ),
       ),
     );
-    }
+  }
 }

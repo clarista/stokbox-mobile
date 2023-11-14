@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:stokbox/screens/stokbox_item.dart';
 import 'package:stokbox/screens/menu.dart';
-import 'package:stokbox/screens/shoplist_form.dart';
+import 'package:stokbox/screens/stokbox_form.dart';
+
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -11,14 +13,13 @@ class LeftDrawer extends StatelessWidget {
       child: ListView(
         children: [
           const DrawerHeader(
-            // Bagian drawer header
             decoration: BoxDecoration(
-              color: Colors.pinkAccent,
+              color: Colors.indigoAccent,
             ),
             child: Column(
               children: [
                 Text(
-                  'Shopping List',
+                  'Stokbox',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
@@ -27,25 +28,25 @@ class LeftDrawer extends StatelessWidget {
                   ),
                 ),
                 Padding(padding: EdgeInsets.all(10)),
-                Text("Catat seluruh keperluan belanjamu di sini!",
-                    // Tambahkan gaya teks dengan center alignment, font ukuran 15, warna putih, dan weight biasa
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                    ),
+                Text(
+                  "Masukkan semua buah yang anda suka!",
+                  // TODO: Tambahkan gaya teks dengan center alignment, font ukuran 15, warna putih, dan weight biasa
+                  textAlign: TextAlign.center, // Center alignment
+                  style: TextStyle(
+                  fontSize: 15, // Font size 15
+                  color: Colors.white, // Text color white
+                  fontWeight: FontWeight.normal, // Normal font weight
                 ),
+              ),
               ],
             ),
           ),
-          // Bagian routing
           ListTile(
             leading: const Icon(Icons.home_outlined),
             title: const Text('Halaman Utama'),
             // Bagian redirection ke MyHomePage
             onTap: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => MyHomePage(),
@@ -54,20 +55,27 @@ class LeftDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.add_shopping_cart),
-            title: const Text('Tambah Produk'),
+            title: const Text('Tambah Item'),
             // Bagian redirection ke ShopFormPage
             onTap: () {
-              /*
-              Buatlah routing ke ShopFormPage di sini,
-              setelah halaman ShopFormPage sudah dibuat.
-              */
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ShopFormPage(),
                   ));
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.view_list),
+            title: const Text('Lihat Item'),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductListPage(productList: productList),
+                ));
+            },
+          )
         ],
       ),
     );
