@@ -25,7 +25,7 @@ Perbedaan antara `navigation.push()` dan `navigation.pushReplacement()` adalah p
 Pada program saya, layout widget yang saya gunakan adalah:
 - Container Widget: Container adalah widget yang serbaguna untuk mengatur tampilan tata letak dan dekorasi elemen-elemen dalam aplikasi. Mengatur properti seperti warna latar belakang, padding, margin, dan sebagainya. Ini berguna untuk mengatur tampilan dan tata letak umum dalam aplikasi
 
-- ListView Widget: ListView digunakan ketika Anda memiliki daftar elemen yang panjang atau dinamis yang perlu ditampilkan dalam daftar gulir. Ini memungkinkan pengguna untuk menggulir daftar elemen dengan mudah.
+- ListView Widget: ListView digunakan ketikamemiliki daftar elemen yang panjang atau dinamis yang perlu ditampilkan dalam daftar gulir. Ini memungkinkan pengguna untuk menggulir daftar elemen dengan mudah.
 
 - GridView Widget: GridView digunakan untuk mengatur elemen-elemen dalam bentuk grid (kotak atau baris dan kolom). Ini berguna untuk menampilkan elemen-elemen dalam grid seperti galeri foto atau grid produk dalam aplikasi belanja.
 
@@ -49,64 +49,203 @@ Lapisan ini berisi logika bisnis inti aplikasi yang terisolasi dari lapisan tamp
 Ini adalah lapisan yang menangani akses ke data eksternal seperti panggilan API, basis data, penyimpanan lokal, atau sumber data lainnya yang mungkin diperlukan oleh aplikasi.
 
 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial)
-Tentu, berikut ini adalah penjelasan langkah-langkahnya menggunakan "saya":
 
-1. **Membuat Berkas Baru (left_drawer.dart)**:
-   - Saya akan membuat berkas baru dengan nama `left_drawer.dart` di dalam direktori `widgets`.
+1. **Membuat Halaman Formulir Tambah Item Baru:**
+   - Untuk membuat halaman baru, saya membuat sebuah widget StatefulWidget yang disebut `ShopFormPage` dalam berkas `stokbox_form.dart`. Widget ini akan menjadi halaman formulir tambah item baru.
 
-2. **Tambahkan Widget Drawer**:
-   - Dalam berkas `left_drawer.dart`, saya akan menambahkan widget `Drawer` yang berisi widget `ListView`. Ini akan menjadi tampilan menu drawer.
+   ```dart
+   class ShopFormPage extends StatefulWidget {
+       const ShopFormPage({super.key});
+       @override
+       State<ShopFormPage> createState() => _ShopFormPageState();
+   }
+   ```
 
-3. **Mengimpor Halaman**:
-   - Saya akan mengimpor halaman yang ingin saya tambahkan ke drawer, seperti `MyHomePage` dan `ShopFormPage`, yang akan saya gunakan untuk navigasi.
+   - Di dalam `_ShopFormPageState`, saya membuat sebuah formulir dengan widget `Form`. Saya juga menggunakan `GlobalKey<FormState>` untuk mengelola state formulir dan validasi.
 
-4. **Menambahkan Navigasi ke Drawer**:
-   - Saya akan menambahkan widget `ListTile` untuk setiap halaman yang ingin saya tambahkan ke menu drawer.
-   - Saya akan menggunakan `Navigator.pushReplacement` untuk mengarahkan pengguna ke halaman baru saat salah satu opsi di drawer dipilih.
+   ```dart
+   class _ShopFormPageState extends State<ShopFormPage> {
+       final _formKey = GlobalKey<FormState>();
+       String _name = "";
+       int _amount = 0;
+       int _price = 0;
+       String _description = "";
+   }
+   ```
 
-5. **Menghias Drawer**:
-   - Saya dapat menambahkan dekorasi dan teks pada bagian header drawer untuk memberikan tampilan yang menarik.
-   - Saya akan sesuaikan desain dan tata letak sesuai dengan kebutuhan desain aplikasi saya.
+   - Selanjutnya, saya menambahkan elemen-elemen input seperti `TextFormField` untuk `name`, `amount`, dan `description`. Saya juga dapat menambahkan field `price`.
 
-6. **Mengintegrasikan Drawer ke Halaman**:
-   - Saya akan mengimpor drawer yang telah saya buat ke dalam halaman yang ingin memiliki drawer.
-   - Saya akan masukkan drawer sebagai nilai parameter `drawer` pada widget `Scaffold` pada halaman tersebut.
+   ```dart
+   Padding(
+         padding: const EdgeInsets.all(8.0),
+         child: TextFormField(
+         decoration: InputDecoration(
+            hintText: "Nama Item",
+            labelText: "Nama Item",
+            border: OutlineInputBorder(
+               borderRadius: BorderRadius.circular(5.0),
+            ),
+         ),
+         onChanged: (String? value) {
+            setState(() {
+               _name = value!;
+            });
+         },
+         validator: (String? value) {
+            if (value == null || value.isEmpty) {
+               return "Nama item tidak boleh kosong!";
+            }
+            return null;
+         },
+         ),
+      ),
+      Padding(
+         padding: const EdgeInsets.all(8.0),
+         child: TextFormField(
+         decoration: InputDecoration(
+            hintText: "Jumlah",
+            labelText: "Jumlah",
+            border: OutlineInputBorder(
+               borderRadius: BorderRadius.circular(5.0),
+            ),
+         ),
+         onChanged: (String? value) {
+            setState(() {
+               _amount = int.parse(value!);
+            });
+         },
+         validator: (String? value) {
+            if (value == null || value.isEmpty) {
+               return "Jumlah tidak boleh kosong!";
+            }
+            if (int.tryParse(value) == null) {
+               return "Jumlah harus berupa angka!";
+            }
+            return null;
+         },
+         ),
+      ),
+      Padding(
+         padding: const EdgeInsets.all(8.0),
+         child: TextFormField(
+         decoration: InputDecoration(
+            hintText: "Harga",
+            labelText: "Harga",
+            border: OutlineInputBorder(
+               borderRadius: BorderRadius.circular(5.0),
+            ),
+         ),
+         onChanged: (String? value) {
+            setState(() {
+               _price = int.parse(value!);
+            });
+         },
+         validator: (String? value) {
+            if (value == null || value.isEmpty) {
+               return "Harga tidak boleh kosong!";
+            }
+            if (int.tryParse(value) == null) {
+               return "Harga harus berupa angka!";
+            }
+            return null;
+         },
+         ),
+      ),
+      Padding(
+         padding: const EdgeInsets.all(8.0),
+         child: TextFormField(
+         decoration: InputDecoration(
+            hintText: "Deskripsi",
+            labelText: "Deskripsi",
+            border: OutlineInputBorder(
+               borderRadius: BorderRadius.circular(5.0),
+            ),
+         ),
+         onChanged: (String? value) {
+            setState(() {
+               _description = value!;
+            });
+         },
+         validator: (String? value) {
+            if (value == null || value.isEmpty) {
+               return "Deskripsi tidak boleh kosong!";
+            }
+            return null;
+         },
+         ),
+      ),
+   
+   ```
 
-7. **Menampilkan Data**:
+2. Di halaman utama, tambahkan tombol "Tambah Item" dengan menggunakan widget ElevatedButton atau TextButton dan tambahkan perintah navigasi ke halaman form tambah item saat tombol ditekan. 
+```dart
+ElevatedButton(
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FormTambahItemPage()),
+    );
+  },
+  child: Text("Tambah Item"),
+)
+```
 
-   **Membuat Berkas Form Baru (shoplist_form.dart)**:
-   - Saya akan membuat berkas baru dengan nama `shoplist_form.dart` di dalam direktori `lib`.
-   - Dalam berkas ini, saya akan tambahkan widget `Scaffold` dengan `AppBar` dan drawer yang sudah saya buat sebelumnya.
 
-   **Menambahkan Widget Form**:
-   - Saya akan menggunakan widget `Form` sebagai wadah untuk bidang input.
-   - Saya akan gunakan `SingleChildScrollView` untuk membuat form menjadi scrollable.
+3. Terakhir, setelah pengguna mengisi formulir dan menekan tombol **"Save"**, saya menampilkan data yang diisi dalam sebuah pop-up menggunakan `showDialog()`.
 
-   **Mengimplementasikan Bidang Input**:
-   - Saya akan tambahkan `TextFormField` untuk setiap elemen input yang dibutuhkan.
-   - Saya akan menggunakan `Padding` dan `Column` untuk merapikan tata letak elemen input.
+4. **Membuat Drawer:**
+   - Untuk membuat drawer, saya membuat sebuah widget `LeftDrawer` dalam berkas `left_drawer.dart`. Widget ini akan menjadi drawer yang berisi opsi navigasi.
 
-   **Validasi Input**:
-   - Saya akan menggunakan atribut `onChanged` pada `TextFormField` untuk mendeteksi perubahan nilai.
-   - Saya akan terapkan validasi dengan atribut `validator` untuk memastikan input sesuai kebutuhan.
+   ```dart
+   Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        children: [
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.indigoAccent,
+            ),
+   ```
+   - Pada bagian routing untuk opsi navigasi, saya dapat menggunakan `Navigator.pushReplacement()` untuk mengarahkan pengguna ke halaman yang sesuai saat opsi "Halaman Utama" atau "Tambah Item" dipilih.
 
-   **Menampilkan Data pada AlertDialog**:
-   - Saya akan menggunakan `showDialog` ketika formulir tervalidasi.
-   - Saya akan tampilkan data yang dimasukkan oleh pengguna pada `AlertDialog`.
-   - Saya akan reset formulir setelah data ditampilkan.
+   ```dart
+   ListTile(
+            leading: const Icon(Icons.home_outlined),
+            title: const Text('Halaman Utama'),
+            // Bagian redirection ke MyHomePage
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyHomePage(),
+                  ));
+            },
+          ),
+      ListTile(
+      leading: const Icon(Icons.add_shopping_cart),
+      title: const Text('Tambah Item'),
+      // Bagian redirection ke ShopFormPage
+      onTap: () {
+         Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+               builder: (context) => ShopFormPage(),
+            ));
+      },
+      ),
+      ListTile(
+      leading: const Icon(Icons.view_list),
+      title: const Text('Lihat Item'),
+      onTap: () {
+         Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+            builder: (context) => ProductListPage(productList: productList),
+            ));
+      },
+      )
+   ```
 
-8. **Menambahkan Fitur Navigasi pada Tombol**:
-   - Navigasi dari tombol pada `ShopItem`:
-     - Dalam fungsi `onTap` pada widget `ShopItem`, saya akan menggunakan `Navigator.push` untuk melakukan navigasi ke halaman yang sesuai.
-
-9. **Refactoring File**:
-   - Membuat berkas baru untuk widget:
-     - Saya akan membuat berkas dengan nama `shop_card.dart` di dalam direktori `widgets`.
-   - Saya akan pindahkan konten widget `ShopItem` dari `menu.dart` ke `shop_card.dart`.
-   - Mengimpor file ke dalam folder:
-     - Saya akan membuat folder baru dengan nama `screens` di dalam direktori `lib`.
-     - Saya akan pindahkan berkas `menu.dart` dan `shoplist_form.dart` ke dalam folder `screens`.
-   - Saya akan memastikan refactoring dilakukan dengan IDE atau text editor yang mendukung Flutter.
 
 </details>
 
@@ -120,10 +259,10 @@ NPM    : 2206815541
 
 1. Perbedaan utama antara stateless dan stateful widget dalam konteks pengembangan aplikasi Flutter<br/>
 `Stateless Widget:`<br/>
-Stateless widget adalah widget yang tidak memiliki perubahan internal (state) selama aplikasi masih berjalan. Stateless widget cocok digunakan untuk elemen UI yang tidak perlu diperbarui atau tidak berubah selama aplikasi berjalan. Stateless widget tidak memiliki metode `setState()`, sehingga tidak dapat memperbarui tampilan secara dinamis. Contoh penggunaan stateless widget dalam kode yang Anda berikan adalah widget `ShopCard`. <br/>
+Stateless widget adalah widget yang tidak memiliki perubahan internal (state) selama aplikasi masih berjalan. Stateless widget cocok digunakan untuk elemen UI yang tidak perlu diperbarui atau tidak berubah selama aplikasi berjalan. Stateless widget tidak memiliki metode `setState()`, sehingga tidak dapat memperbarui tampilan secara dinamis. Contoh penggunaan stateless widget adalah widget `ShopCard`. <br/>
 
 `Stateful Widget:`<br/>
-Stateful widget adalah widget yang memiliki perubahan internal (state) yang dapat diperbarui selama aplikasi berjalan. Ini digunakan untuk elemen UI yang memerlukan pembaruan tampilan berdasarkan perubahan data atau interaksi pengguna. Stateful widget memiliki metode `setState()`, yang memungkinkan Anda memperbarui tampilan ketika ada perubahan state. Contoh penggunaan stateful widget dalam Flutter biasanya melibatkan widget seperti `ListView`, `TextField`, dan lainnya yang perlu bereaksi terhadap input atau perubahan data.
+Stateful widget adalah widget yang memiliki perubahan internal (state) yang dapat diperbarui selama aplikasi berjalan. Ini digunakan untuk elemen UI yang memerlukan pembaruan tampilan berdasarkan perubahan data atau interaksi pengguna. Stateful widget memiliki metode `setState()`, yang memungkinkan kita memperbarui tampilan ketika ada perubahan state. Contoh penggunaan stateful widget dalam Flutter biasanya melibatkan widget seperti `ListView`, `TextField`, dan lainnya yang perlu bereaksi terhadap input atau perubahan data.
 
 2. Widget yang saya gunakan untuk menyelesaikan tugas ini dan fungsinya:
 
