@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stokbox/screens/list_product.dart';
 import 'package:stokbox/screens/stokbox_item.dart';
 import 'package:stokbox/screens/menu.dart';
 import 'package:stokbox/screens/stokbox_form.dart';
@@ -65,17 +66,29 @@ class LeftDrawer extends StatelessWidget {
                   ));
             },
           ),
+          // ListTile(
+          //   leading: const Icon(Icons.view_list),
+          //   title: const Text('Lihat Item'),
+          //   onTap: () {
+          //     Navigator.pushReplacement(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => ProductListPage(productList: productList),
+          //       ));
+          //   },
+          // )
+          // Kode ListTile Menu
           ListTile(
-            leading: const Icon(Icons.view_list),
-            title: const Text('Lihat Item'),
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProductListPage(productList: productList),
-                ));
-            },
-          )
+              leading: const Icon(Icons.shopping_basket),
+              title: const Text('Daftar Produk'),
+              onTap: () {
+                  // Route menu ke halaman produk
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductPage()),
+                  );
+              },
+          ),
         ],
       ),
     );

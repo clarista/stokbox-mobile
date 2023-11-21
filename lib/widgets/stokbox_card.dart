@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:stokbox/screens/list_product.dart';
 import 'package:stokbox/screens/menu.dart';
 import 'package:stokbox/screens/stokbox_form.dart';
 import 'package:stokbox/screens/stokbox_item.dart';
 
 class ShopItem {
+  final String nomor;
   final String name;
   final IconData icon;
 
-  ShopItem(this.name, this.icon);
+  ShopItem(this.nomor, this.name, this.icon);
 }
 
 class ShopCard extends StatelessWidget {
@@ -39,16 +41,19 @@ class ShopCard extends StatelessWidget {
                   builder: (context) => ShopFormPage(),
                 ));
           }
-
-          if (item.name == "Lihat Item") {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProductListPage(productList: productList)
-              ));
-          }
+          else if (item.name == "Lihat Produk") {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const ProductPage()));
+                }
+        //   if (item.name == "Lihat Item") {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (context) => ProductListPage(productList: productList)
+        //       ));
+        //   }
         },
-        
+
         child: Container(
           // Container untuk menyimpan Icon dan Text
           padding: const EdgeInsets.all(8),
@@ -56,6 +61,11 @@ class ShopCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  item.nomor,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white),
+                ),
                 Icon(
                   item.icon,
                   color: Colors.white,
@@ -67,6 +77,7 @@ class ShopCard extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: const TextStyle(color: Colors.white),
                 ),
+              
               ],
             ),
           ),

@@ -297,3 +297,130 @@ Kelas ini digunakan untuk mewakili barang-barang yang dapat ditampilkan dalam da
    Saat tombol di dalam aplikasi Flutter yang telah saya buat ditekan, saya mengimplementasikan action untuk menampilkan Snackbar dengan pesan yang sesuai dengan tombol yang ditekan. Misalnya, ketika saya menekan tombol "Lihat Produk", maka akan muncul Snackbar dengan pesan "Kamu telah menekan tombol Lihat Produk!". Saat saya menekan tombol "Tambah Produk", Snackbar akan muncul dengan pesan "Kamu telah menekan tombol Tambah Produk!", dan ketika saya menekan tombol "Logout", Snackbar akan muncul dengan pesan "Kamu telah menekan tombol Logout!". Implementasi ini memungkinkan pesan yang ditampilkan dalam Snackbar untuk dinamis sesuai dengan action yang dilakukan oleh user, sehingga memberikan feedback yang jelas tentang action yang telah dilakukan dalam aplikasi.
 
 </details>
+
+
+
+
+<details>
+<summary> Tugas 9 </summary>
+
+1. **Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?**
+
+Ya, kita bisa melakukan pengambilan data JSON tanpa membuat model terlebih dahulu. Pengambilan data JSON adalah proses membaca atau mengonsumsi data yang dikirimkan dalam format JSON. Ini bisa dilakukan dengan menggunakan bahasa pemrograman yang mendukung pengolahan JSON atau melalui library khusus yang ada dalam banyak bahasa pemrograman. Sedangkan pembuatan model seringkali terkait dengan kebutuhan analisis data yang lebih dalam, seperti pembelajaran mesin (machine learning) di mana Anda ingin membuat model berdasarkan data yang Anda miliki.
+
+Apakah lebih baik melakukan pengambilan data JSON tanpa membuat model terlebih dahulu atau tidak tergantung pada kebutuhan dan tujuan Anda:
+- Jika tujuannya hanya untuk mengakses atau menampilkan data JSON yang diterima dari suatu API atau sumber data lainnya, lebih baik tidak membuat model.
+- Jika tujuannya untuk menganalisis data lebih lanjut, memprediksi pola, atau membuat rekomendasi berdasarkan data tersebut, perlu membangun model.
+
+2. **Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.**
+
+CookieRequest berfungsi untuk mengelola permintaan request yang berhubungan dengan cookie dalam aplikasi. Dimana class ini akan menngatur hal-hal yang berkaitan dengan data yang disimpan di sisi cllient untuk melacak informasi terkait sesi pengguna.
+
+Instance CookieRequest perlu dibagikan ke semua komponen untuk memastikan bahwa manajemen cookie dilakukan dengan cara yang seragam di semua komponen dalam aplikasi tersebut sehingga sesi pengguna akan dipelihata dengan konsisten.
+
+3. **Jelaskan mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter.**
+
+- Gunakan package dan library yang diperlukan, contohnya http dan convert.
+```dart
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+```
+- Fetch data menggunakan HTTP untuk meminta data dari server yang memiliki data JSON tersebut.
+```dart
+  Future<List<Item>> fetchItem() async {
+    var response = await http.get(
+      Uri.parse(
+        //'http://fredo-melvern-tugas.pbp.cs.ui.ac.id/json/'
+        'http://127.0.0.1:8000/json/'
+        //'http://127.0.0.1:8000/get-flutter/'
+        );,
+      headers: {"Content-Type": "application/json"},
+    );
+  }
+```
+- Parsing atau convert response tersebut ke dalam bentuk JSON.
+```dart
+Future<void> getData() async {
+  try {
+    var jsonData = await fetchData();
+    List<dynamic> dataList = jsonData.body;
+
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+```
+- Menampilkan data di flutter contohnya menggunakan ListView.builder
+
+```dart
+ListView.builder(
+  itemCount: dataList.length,
+  itemBuilder: (context, index) {
+    return ListTile(
+      title: Text(dataList[index]['title']),
+      subtitle: Text(dataList[index]['description']),
+    );
+  },
+);
+```
+
+4. **Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.**
+
+Pertama menggunakan package `pbp_django_auth`, dibuat CookieRequest baru masukkan ke variabel bernama request.
+```dart
+final request = context.watch<CookieRequest>();
+```
+
+Pada `login.dart`, aplikasi akan meminta input teks berupa username & password. Ketika disubmit, akan dipanggil:
+```dart
+final response = await request.login(
+  "http://127.0.0.1:8000/auth/login/",
+  {
+    'username': username,
+    'password': password
+  }
+);
+```
+dimana username dan password tersebut akan dikirmkan request ke projek Django agar user di authenticate & login. Jika sukses akan mengembalikan JsonResponse sukses, dan gagal jika sebaliknya.
+```dart
+
+@csrf_exempt
+def login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            auth_login(request, user)
+            # Status login sukses.
+            return JsonResponse({
+                "username": user.username,
+                "status": True,
+                "message": "Login sukses!"
+                # Tambahkan data lainnya jika ingin mengirim data ke Flutter.
+            }, status=200)
+        else:
+            return JsonResponse({
+                "status": False,
+                "message": "Login gagal, akun dinonaktifkan."
+            }, status=401)
+
+    else:
+        return JsonResponse({
+            "status": False,
+            "message": "Login gagal, periksa kembali email atau kata sandi."
+        }, status=401)
+```
+
+5. **Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.**
+
+- TextField : menerima input teks dari pengguna. Pada tugas ini digunakan untuk menerima username dan password saat login dan registrasi.
+- SizedBox : membuat ruang tertentu. Pada tugas ini dugnakan untuk memberikan jarak atau pemisah antara TextField username dan passowrd.
+- ElevatedButton : membuat tombol yang memiliki efek elevasi ketika ditekan. Pada tugas ini digunakan sebagai tombol submit pada saat login dan registrasi.
+- TextButton : membuat tombol berupa teks tanpa latar belakang. Pada tugas ini digunakan pada tombol registrasi
+- Listview.builder : membuat daftar item yang dapat discroll. Pada tugas ini digunakan untuk menampilkan daftar item yang ada.
+- Text : membuat teks. Pada tugas ini digunakann untuk menampilkan teks detail saat item pada daftar item ditekan.
+
+
+6. **Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).**
+</details>
