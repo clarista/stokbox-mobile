@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:stokbox/screens/login.dart';
+
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -7,7 +9,6 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  //final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -39,6 +40,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) => LoginPage(),
+                  ));
                 },
                 child: Text('OK'),
               ),
@@ -72,7 +76,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Regisration Form'),
+        title: const Text('Registration Form'),
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),

@@ -1,12 +1,12 @@
 import 'package:stokbox/screens/menu.dart';
 import 'package:flutter/material.dart';
-import 'package:stokbox/screens/register.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:stokbox/screens/register.dart';
 
-// void main() {
-//     runApp(const LoginApp());
-// }
+void main() {
+    runApp(const LoginApp());
+}
 
 class LoginApp extends StatelessWidget {
 const LoginApp({super.key});
@@ -27,10 +27,10 @@ class LoginPage extends StatefulWidget {
     const LoginPage({super.key});
 
     @override
-    LoginPageState createState() => LoginPageState();
+    _LoginPageState createState() => _LoginPageState();
 }
 
-class LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> {
     final TextEditingController _usernameController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
 
@@ -46,16 +46,13 @@ class LoginPageState extends State<LoginPage> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-
-                      TextField(
+                        TextField(
                             controller: _usernameController,
                             decoration: const InputDecoration(
                                 labelText: 'Username',
                             ),
                         ),
-
                         const SizedBox(height: 12.0),
-
                         TextField(
                             controller: _passwordController,
                             decoration: const InputDecoration(
@@ -63,22 +60,18 @@ class LoginPageState extends State<LoginPage> {
                             ),
                             obscureText: true,
                         ),
-
                         const SizedBox(height: 24.0),
-
                         ElevatedButton(
                             onPressed: () async {
                                 String username = _usernameController.text;
                                 String password = _passwordController.text;
 
                                 // Cek kredensial
-                                // Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
+                                // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
                                 // Untuk menyambungkan Android emulator dengan Django pada localhost,
                                 // gunakan URL http://10.0.2.2/
-                                final response = await request.login(
-                                  //"http://fredo-melvern-tugas.pbp.cs.ui.ac.id/auth/login/"
-                                  "http://127.0.0.1:8000/auth/login/"
-                                  , {
+                                final response = await request.login("http://localhost:8000/auth/login/", {
+                                  //https://clarista-tugas.pbp.cs.ui.ac.id/auth/login/
                                 'username': username,
                                 'password': password,
                                 });
@@ -115,11 +108,6 @@ class LoginPageState extends State<LoginPage> {
                             },
                             child: const Text('Login'),
                         ),
-
-
-                        const SizedBox(height: 24.0),
-
-
                         TextButton(
                           onPressed: () {
                             Navigator.pushReplacement(
