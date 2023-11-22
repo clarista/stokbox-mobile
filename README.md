@@ -299,18 +299,16 @@ Kelas ini digunakan untuk mewakili barang-barang yang dapat ditampilkan dalam da
 </details>
 
 
-
-
 <details>
 <summary> Tugas 9 </summary>
 
 1. **Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?**
 
-Ya, kita bisa melakukan pengambilan data JSON tanpa membuat model terlebih dahulu. Pengambilan data JSON adalah proses membaca atau mengonsumsi data yang dikirimkan dalam format JSON. Ini bisa dilakukan dengan menggunakan bahasa pemrograman yang mendukung pengolahan JSON atau melalui library khusus yang ada dalam banyak bahasa pemrograman. Sedangkan pembuatan model seringkali terkait dengan kebutuhan analisis data yang lebih dalam, seperti pembelajaran mesin (machine learning) di mana Anda ingin membuat model berdasarkan data yang Anda miliki.
+Ya, kita bisa melakukan pengambilan data JSON tanpa membuat model terlebih dahulu. Pengambilan data JSON adalah proses membaca atau mengonsumsi data yang dikirimkan dalam format JSON. Ini bisa dilakukan dengan menggunakan bahasa pemrograman yang mendukung pengolahan JSON atau melalui library khusus yang ada dalam banyak bahasa pemrograman.
 
-Apakah lebih baik melakukan pengambilan data JSON tanpa membuat model terlebih dahulu atau tidak tergantung pada kebutuhan dan tujuan Anda:
-- Jika tujuannya hanya untuk mengakses atau menampilkan data JSON yang diterima dari suatu API atau sumber data lainnya, lebih baik tidak membuat model.
-- Jika tujuannya untuk menganalisis data lebih lanjut, memprediksi pola, atau membuat rekomendasi berdasarkan data tersebut, perlu membangun model.
+Apakah lebih baik melakukan pengambilan data JSON tanpa membuat model terlebih dahulu atau tidak tergantung pada kebutuhan dan tujuan:
+- Kalau tujuannya hanya untuk mengakses atau menampilkan data JSON yang diterima dari suatu API atau sumber data lainnya, lebih baik tidak membuat model.
+-Kalau tujuannya untuk menganalisis data lebih lanjut, memprediksi pola, atau membuat rekomendasi berdasarkan data tersebut, perlu membangun model.
 
 2. **Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.**
 
@@ -329,10 +327,8 @@ import 'dart:convert';
 ```dart
   Future<List<Item>> fetchItem() async {
     var response = await http.get(
-      Uri.parse(
-        //'http://fredo-melvern-tugas.pbp.cs.ui.ac.id/json/'
-        'http://127.0.0.1:8000/json/'
-        //'http://127.0.0.1:8000/get-flutter/'
+      Uri.parse('
+        'http://localhost:8000/json/'
         );,
       headers: {"Content-Type": "application/json"},
     );
@@ -374,7 +370,7 @@ final request = context.watch<CookieRequest>();
 Pada `login.dart`, aplikasi akan meminta input teks berupa username & password. Ketika disubmit, akan dipanggil:
 ```dart
 final response = await request.login(
-  "http://127.0.0.1:8000/auth/login/",
+  "http://localhost:8000/auth/login/",
   {
     'username': username,
     'password': password
@@ -415,12 +411,18 @@ def login(request):
 5. **Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.**
 
 - TextField : menerima input teks dari pengguna. Pada tugas ini digunakan untuk menerima username dan password saat login dan registrasi.
-- SizedBox : membuat ruang tertentu. Pada tugas ini dugnakan untuk memberikan jarak atau pemisah antara TextField username dan passowrd.
 - ElevatedButton : membuat tombol yang memiliki efek elevasi ketika ditekan. Pada tugas ini digunakan sebagai tombol submit pada saat login dan registrasi.
 - TextButton : membuat tombol berupa teks tanpa latar belakang. Pada tugas ini digunakan pada tombol registrasi
 - Listview.builder : membuat daftar item yang dapat discroll. Pada tugas ini digunakan untuk menampilkan daftar item yang ada.
-- Text : membuat teks. Pada tugas ini digunakann untuk menampilkan teks detail saat item pada daftar item ditekan.
+- Text : membuat teks. Pada tugas ini digunakan untuk menampilkan teks detail saat item pada daftar item ditekan.
 
 
 6. **Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).**
+- Membuat app baru bernama authentication pada proyek django sebelumnya. Lalu melakukan beberapa settings pada setting.py nya.
+- Membuat views untuk authentication yang nantinya akan digunakan pada saat login.
+- Menginstal package Flutter untuk melakukan kontak dengan webservice django.
+- Membuat file untuk login, yaitu login.dart di folder screens, lalu mengimplementasikan kode nya.
+- Membuat model kustom dengan bantuan web Quicktype, lalu menambahkan dependency http nya.
+- Membuat file list_product.dart untuk tampilan "Lihat Item". Disini dilakukan fetch data dari Django tugas sebelumnya. Pada file ini, akan ditambilkan seluruh item yang ada di database django tugas sebelumnya, dan saya membuat ontap pada setiap item yang bis aberalih ke page deail product.
+- Membuat file detail product untuk menapilkan dtail suatu product.
 </details>

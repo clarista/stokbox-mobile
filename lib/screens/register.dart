@@ -103,9 +103,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
             const SizedBox(height: 24.0),
             ElevatedButton(
               onPressed: () async {
-                // String username = _usernameController.text;
-                // String password = _passwordController.text;
-
                 await _registerUser();
               },
               child: const Text('Register'),
