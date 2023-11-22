@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:stokbox/models/product.dart';
+import 'package:stokbox/screens/detail_product.dart';
 import 'package:stokbox/widgets/left_drawer.dart';
 
 class ProductPage extends StatefulWidget {
@@ -15,7 +16,8 @@ class _ProductPageState extends State<ProductPage> {
 Future<List<Product>> fetchProduct() async {
     // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
     var url = Uri.parse(
-        'https://clarista-tugas.pbp.cs.ui.ac.id/json/');
+        // 'https://clarista-tugas.pbp.cs.ui.ac.id/json/');
+        'http://localhost:8000/json/');
     var response = await http.get(
         url,
         headers: {"Content-Type": "application/json"},
@@ -59,9 +61,25 @@ Widget build(BuildContext context) {
                         ],
                     );
                 } else {
-                    return ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (_, index) => Container(
+                          return ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (_, index) => InkWell(
+                              onTap: () {
+                                // Navigate ke detail page
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailPage(
+                                      itemName: snapshot.data![index].fields.name,
+                                      price: snapshot.data![index].fields.price,
+                                      itemDescription: snapshot.data![index].fields.description,
+                                      itemAmount: snapshot.data![index].fields.amount,
+                                      // Pass more data if needed
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(           
                                 margin: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 12),
                                 padding: const EdgeInsets.all(20.0),
@@ -83,6 +101,7 @@ Widget build(BuildContext context) {
                                         "${snapshot.data![index].fields.description}")
                                 ],
                                 ),
+                              ),
                             ));
                     }
                 }
